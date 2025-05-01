@@ -1,5 +1,17 @@
 {
-  "recettes": [],
+  "recettes": [
+    {
+      "id": "86ee",
+      "title": "jfkygulirmoflm",
+      "description": "gulimopjmkùrf",
+      "ingredients": [
+        "Salmon",
+        "Beef"
+      ],
+      "instructions": "uipoj^kermiejnfmorjnf,ez!dm",
+      "image": "blob:http://localhost:5173/fd26d44b-f13b-44ad-a5a7-0a6ab497fa2e"
+    }
+  ],
   "ingredients": [
     {
       "0": "Chicken",
@@ -578,5 +590,6 @@
       "573": "Buckwheat",
       "574": "Prunes",
       "id": "7edb"
-    }]
+    }
+  ]
 }

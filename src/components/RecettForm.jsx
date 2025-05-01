@@ -19,6 +19,8 @@ const RecipeForm = () => {
         axios.get('http://localhost:8000/ingredients')
             .then((res) => {
                 const ingredients = res.data.length > 0 ? Object.values(res.data[0]) : [];
+                // console.log('Fetched ingredients:', ingredients);
+                setIngredients(ingredients);
             })
             .catch((err) => {
                 console.error('Error fetching ingredients:', err);
@@ -59,27 +61,33 @@ const RecipeForm = () => {
         return Object.keys(newErrors).length === 0;
     };
 
+    
     const handleSubmit = () => {
         if (validateForm()) {
-            const formData = {
+            const newRecette = {
                 title,
                 description,
                 ingredients: selectedIngredients,
                 instructions,
-                image
+                image: image ? URL.createObjectURL(image) : null 
             };
 
-            console.log('Recipe data:', formData);
-            alert('Recette ajoutée avec succès!');
+            axios.post('http://localhost:8000/recettes', newRecette)
+                .then((res) => {
+                    console.log('Recette ajoutée avec succès:', res.data);
+                    alert('Recette ajoutée avec succès !');
 
-            // Reset form
-            setTitle('');
-            setDescription('');
-            setSelectedIngredients([]);
-            setInstructions('');
-            setImage(null);
-            setImageName('');
-            setErrors({});
+                    setTitle('');
+                    setDescription('');
+                    setSelectedIngredients([]);
+                    setInstructions('');
+                    setImage(null);
+                    setImageName('');
+                    setErrors({});
+                })
+                .catch((err) => {
+                    console.error("Erreur lors de l'ajout de la recette:", err);
+                });
         }
     };
 
@@ -88,7 +96,6 @@ const RecipeForm = () => {
         if (file) {
             setImage(file);
             setImageName(file.name);
-            // Handle image upload logic
         }
     };
 
@@ -102,7 +109,10 @@ const RecipeForm = () => {
 
     const removeIngredient = (ingredient) => {
         setSelectedIngredients(selectedIngredients.filter(item => item !== ingredient));
+
     };
+    
+   
 
     return (
         <div className="w-full min-h-screen p-6 bg-white rounded-lg shadow-lg">
