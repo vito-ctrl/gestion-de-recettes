@@ -1,9 +1,12 @@
+
+
 import React, { useRef } from 'react';
 import RecetteCard from './RecetteCard';
 import food from '../assets/indian food.jpeg';
 
 const Home = () => {
     const recetteCardRef = useRef(null);
+
     const scrollToRecetteCard = () => {
         if (recetteCardRef.current) {
             recetteCardRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -13,7 +16,7 @@ const Home = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             <section
-                className="relative bg-cover bg-center h-[400px] flex items-center justify-center"
+                className="relative bg-cover bg-center h-screen flex items-center justify-center"
                 style={{
                     backgroundImage: `url(${food})`,
                 }}
@@ -36,7 +39,7 @@ const Home = () => {
 
             <div className="py-16 px-4 md:px-8">
                 <div className="text-center mb-12">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block">
+                    <h1 ref={recetteCardRef} className="text-3xl md:text-4xl font-bold text-gray-800 relative inline-block">
                         Nos Recettes
                         <span className="block h-1 w-24 bg-yellow-400 mx-auto mt-3"></span>
                     </h1>
@@ -44,8 +47,7 @@ const Home = () => {
                         Explorez notre collection de délicieuses recettes créées avec passion pour vous inspirer en cuisine.
                     </p>
                 </div>
-
-                <div ref={recetteCardRef}>
+                <div>
                     <RecetteCard />
                 </div>
             </div>
