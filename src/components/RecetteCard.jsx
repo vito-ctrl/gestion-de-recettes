@@ -37,7 +37,7 @@ const RecetteCard = () => {
             {recettes.map((recette) => (
                 <div
                     key={recette.id}
-                    className="bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition-all duration-300 w-full max-w-sm cursor-pointer"
+                    className="bg-gray-900 rounded-2xl shadow-md p-4 hover:shadow-lg transition-all duration-300 w-full max-w-sm cursor-pointer"
                     onClick={() => handleDetails(recette.id)}
                 >
                     {recette.image && (
@@ -47,17 +47,8 @@ const RecetteCard = () => {
                             className="w-full h-48 object-cover rounded-xl mb-4"
                         />
                     )}
-                    <h2 className="text-xl font-semibold text-gray-800 mb-2">{recette.title}</h2>
-                    <p className="text-gray-600 mb-4">{recette.description}</p>
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation(); 
-                            handleDetails(recette.id);
-                        }}
-                        className="mt-auto bg-amber-400 hover:bg-orange-600 text-white py-2 px-4 rounded-lg"
-                    >
-                        Détails
-                    </button>
+                    <h2 className="text-xl font-semibold text-gray-200 mb-2">{recette.title}</h2>
+                    <p className="text-gray-400 mb-4">{recette.description}</p>
                 </div>
             ))}
         </div>

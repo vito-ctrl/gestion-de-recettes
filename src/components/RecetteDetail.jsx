@@ -38,7 +38,7 @@ const RecetteDetail = () => {
             <p className="text-xl text-red-500 mb-4">{error || "Recette non trouvée"}</p>
             <button
                 onClick={() => navigate('/')}
-                className="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-6 rounded-full transition-all shadow-lg hover:scale-105"
+                className="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-3 px-6 rounded-full transition-all shadow-lg hover:scale-105"
             >
                 ← Retour aux recettes
             </button>
@@ -49,7 +49,7 @@ const RecetteDetail = () => {
         : recette.instructions?.split('", "').map(instr => instr.replace(/(^"|"$)/g, '').trim());
 
     return (
-        <section className="min-h-screen bg-gray-50 px-4 md:px-10 py-10">
+        <section className="min-h-screen bg-black px-4 md:px-10 py-10">
             <div
                 className="relative bg-cover bg-center h-96 rounded-xl shadow-lg mb-10"
                 style={{ backgroundImage: `url(${recette.image || defaultImage})` }}
@@ -64,17 +64,17 @@ const RecetteDetail = () => {
 
             <div className="max-w-4xl mx-auto space-y-8">
                 {recette.description && (
-                    <div className="bg-white p-6 rounded-lg shadow-md">
-                        <p className="text-gray-700 text-lg">{recette.description}</p>
+                    <div className="bg-black p-6 rounded-lg shadow-md">
+                        <p className="text-white text-lg">{recette.description}</p>
                     </div>
                 )}
 
                 <div>
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-4 relative inline-block">
+                    <h2 className="text-2xl font-semibold text-gray-200 mb-4 relative inline-block">
                         Ingrédients
-                        <span className="block h-1 w-16 bg-yellow-400 mt-2"></span>
+                        <span className="block h-1 w-16 bg-gray-400 mt-2"></span>
                     </h2>
-                    <ul className="list-disc list-inside space-y-2 text-gray-700 text-lg pl-4">
+                    <ul className="list-disc list-inside space-y-2 text-gray-300 text-lg pl-4">
                         {recette.ingredients && recette.ingredients.map((ingredient, index) => (
                             <li key={index}>{ingredient}</li>
                         ))}
@@ -82,11 +82,11 @@ const RecetteDetail = () => {
                 </div>
 
                 <div>
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-4 relative inline-block">
+                    <h2 className="text-2xl font-semibold text-gray-200 mb-4 relative inline-block">
                         Instructions
-                        <span className="block h-1 w-16 bg-yellow-400 mt-2"></span>
+                        <span className="block h-1 w-16 bg-gray-400 mt-2"></span>
                     </h2>
-                    <ol className="list-decimal list-inside space-y-3 text-gray-700 text-lg pl-4">
+                    <ol className="list-decimal list-inside space-y-3 text-gray-300 text-lg pl-4">
                         {parsedInstructions && parsedInstructions.map((instruction, index) => (
                             <li key={index} className="mb-2">{instruction}</li>
                         ))}
@@ -97,7 +97,7 @@ const RecetteDetail = () => {
                 <div className="pt-6">
                     <button
                         onClick={() => navigate('/')}
-                        className="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-6 rounded-full transition-all shadow-lg hover:scale-105"
+                        className="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-3 px-6 rounded-full transition-all shadow-lg hover:scale-105"
                     >
                         ← Retour aux recettes
                     </button>
