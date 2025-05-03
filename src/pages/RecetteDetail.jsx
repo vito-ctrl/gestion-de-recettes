@@ -10,6 +10,9 @@ const RecetteDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    const API_KEY = '4175b93fb7fa4675bea3695b8c6214f1';
+    const API_URL = 'https://api.spoonacular.com/recipes/complexSearch';
+
     useEffect(() => {
         const fetchRecetteDetails = async () => {
             try {
@@ -20,11 +23,30 @@ const RecetteDetail = () => {
             } finally {
                 setLoading(false);
             }
+
+            try {
+                let url = `${API_URL}?apiKey=${API_KEY}&number=12`;
+    
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                setRecipes(data.results);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
         };
 
         if (id) {
             fetchRecetteDetails();
         }
+
+        co
     }, [id]);
 
     if (loading) return (

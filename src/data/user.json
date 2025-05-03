@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": "5f0e",
+      "username": "huxam",
+      "email": "xecepit@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "createdAt": "2025-05-03T15:57:52.474Z"
+    },
+    {
+      "id": "4f45",
+      "username": "mevehizege",
+      "email": "feluminivu@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "createdAt": "2025-05-03T17:05:27.261Z"
+    },
+    {
+      "id": "2582",
+      "username": "kixuquqora",
+      "email": "xazywudog@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "createdAt": "2025-05-03T17:05:48.831Z"
+    },
+    {
+      "id": "67d2",
+      "username": "xohetij",
+      "email": "lutyly@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "createdAt": "2025-05-03T17:26:30.165Z"
+    }
+  ]
+}
