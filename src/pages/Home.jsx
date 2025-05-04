@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import RecetteCard from '../components/RecetesCard';
 import food from '../assets/background-recipeskingdom.png';
 import NavBar from '../components/NavBar';
-import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+// import { Link } from 'react-router-dom';
 
 const Home = () => {
     const [recipes, setRecipes] = useState([]);
@@ -10,7 +11,10 @@ const Home = () => {
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [cuisine, setCuisine] = useState('');
+    const [showModal, setShowModal] = useState(false);
     const recetteCardRef = useRef(null);
+    const [showModals, setShowModals] = useState(false);
+    const [imagePreview, setImagePreview] = useState(null);
 
     const API_KEY = '4175b93fb7fa4675bea3695b8c6214f1';
     const API_URL = 'https://api.spoonacular.com/recipes/complexSearch';
@@ -66,6 +70,39 @@ const Home = () => {
         'Nordic', 'Southern', 'Spanish', 'Thai', 'Vietnamese'
     ];
 
+    const formik = useFormik({
+        initialValues: {
+          name: "",
+          description: "",
+          imageBase64: "",
+        },
+        validate: (values) => {
+          const errors = {};
+          if (!values.name) errors.name = "Le nom est requis";
+          if (!values.description) errors.description = "La description est requise";
+          if (!values.imageBase64) errors.imageBase64 = "L'image est requise";
+          return errors;
+        },
+        onSubmit: (values) => {
+          console.log("Form submitted", values);
+          setShowModal(false);
+        },
+      });
+    
+      const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+    
+        formik.setFieldValue("image", file);
+    
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          formik.setFieldValue("imageBase64", reader.result);
+          setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+      };
+
     return (
         <>
         <NavBar/>
@@ -81,14 +118,86 @@ const Home = () => {
                     <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight">
                         Inspirez-vous, cuisinez avec passion et savourez des moments inoubliables à table.
                     </h2>
-                    <Link to={"/form"}>
-                        <button
-                            onClick={scrollToRecetteCard}
-                            className="bg-gray-400 hover:bg-gray-100 text-gray-800 font-bold py-3 px-8 rounded-full shadow-lg transition-all transform hover:scale-105"
+                    <button
+                        onClick={() => setShowModals(true)}
+                        className="bg-gray-400 hover:bg-gray-100 text-gray-800 font-bold py-3 px-8 rounded-full shadow-lg transition-all transform hover:scale-105"
                         >
-                            add recettes
-                        </button>
-                    </Link>
+                        add recettes
+                    </button>
+
+                    {showModals && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md text-white">
+            <h2 className="text-2xl font-bold mb-4">Ajouter une recette</h2>
+
+            <form onSubmit={formik.handleSubmit} className="space-y-4">
+              <input
+                type="text"
+                name="name"
+                placeholder="Nom de la recette"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                className="w-full placeholder-gray-300 bg-gray-600 px-4 py-2 border rounded"
+              />
+              {formik.errors.name && (
+                <p className="text-red-400 text-sm">{formik.errors.name}</p>
+              )}
+
+              <textarea
+                name="description"
+                placeholder="Description"
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                className="w-full placeholder-gray-300 bg-gray-600 px-4 py-2 border rounded"
+              />
+              {formik.errors.description && (
+                <p className="text-red-400 text-sm">{formik.errors.description}</p>
+              )}
+
+              {/* Image Upload */}
+              <div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="text-sm text-white"
+                />
+                {formik.errors.imageBase64 && (
+                  <p className="text-red-400 text-sm">{formik.errors.imageBase64}</p>
+                )}
+              </div>
+
+              {/* Image Preview */}
+              {imagePreview && (
+                <div className="mt-4">
+                  <p className="text-sm text-gray-300 mb-2">Aperçu de l'image :</p>
+                  <img
+                    src={imagePreview}
+                    alt="Aperçu"
+                    className="max-w-full h-auto max-h-64 rounded-md border border-gray-400"
+                  />
+                </div>
+              )}
+
+              <div className="flex justify-end gap-2 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowModals(false)}
+                  className="px-4 py-2 rounded bg-red-500 hover:bg-red-600"
+                >
+                  Annuler
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded bg-yellow-500 hover:bg-yellow-600 text-white"
+                >
+                  Enregistrer
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
                     <div className="mt-6">
                         
                         <button
